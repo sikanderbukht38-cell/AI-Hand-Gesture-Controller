@@ -1,194 +1,171 @@
-STEP 2 — Paste this entire content
 # AI Hand Gesture Volume Controller
 
-An AI-powered hand gesture system that allows you to control your laptop's system volume using hand movements through your webcam.
-
-The project uses MediaPipe hand landmark detection and OpenCV for real-time hand tracking, while Pycaw controls the Windows system volume.
-
----
+AI-powered Windows volume control using real-time hand gestures and a webcam.
 
 ## Features
 
-- Real-time hand tracking using MediaPipe
-- Thumb-index finger distance controls volume
+- Real-time hand tracking
+- Gesture-based volume control
+- Thumb and index finger distance controls volume
 - Smooth volume adjustment
-- Real Windows system volume control
-- Visual volume percentage and volume bar
-- Blue line showing thumb-index distance
+- Windows system volume control
+- Live volume percentage display
+- Visual volume bar
+- Blue line between thumb and index finger
 - Two-hand gesture detection
-- Open-palm gesture to lock/unlock volume control
-- Lock state remains active even after the second hand disappears
-- Keyboard backup controls
-- Mute/unmute support
-- Volume reset function
-- Startup screen
-- Real-time gesture instructions
-
----
+- Open-palm lock and unlock gesture
+- Persistent volume lock
+- Mute and unmute
+- Volume reset
+- Keyboard controls
 
 ## How It Works
 
 ### Volume Control
 
-The first detected hand controls the volume.
+The first detected hand controls the system volume.
 
-Move your thumb and index finger:
+Move your thumb and index finger closer together or farther apart to change the volume.
 
-```text
-Fingers close
-     ↓
-Low volume
+**Fingers close = Lower volume**
 
-Fingers apart
-     ↓
-High volume
+**Fingers apart = Higher volume**
 
 The distance between the thumb and index finger is converted into a volume percentage from 0% to 100%.
 
-A smoothing system is used to prevent sudden jumps caused by small hand movements.
+### Volume Lock
 
-Lock / Unlock
+The second hand is used to lock and unlock the volume controller.
 
-The second hand is used only for locking and unlocking the volume controller.
+Show an open palm with the second hand to toggle the lock.
 
-Show an open palm with the second hand:
+The lock remains active even after the second hand is removed.
 
-Open Palm
-    ↓
-Toggle Lock
+**Unlocked → Show second-hand palm → Locked**
 
-The lock state remains unchanged when the second hand disappears.
+**Locked → Show second-hand palm again → Unlocked**
 
-Example:
+## Keyboard Controls
 
-UNLOCKED
-   ↓
-Second hand shows palm
-   ↓
-LOCKED
-   ↓
-Second hand disappears
-   ↓
-Still LOCKED
-   ↓
-Second hand shows palm again
-   ↓
-UNLOCKED
+- `Q` — Quit the application
+- `M` — Mute / Unmute
+- `R` — Reset volume to 50% and unlock
 
-This prevents accidental volume changes when you don't want the volume to move.
+## Technologies Used
 
-Keyboard Controls
-Key	Action
-Q	Quit application
-M	Mute / Unmute
-R	Reset volume to 50% and unlock
+- Python
+- OpenCV
+- MediaPipe
+- Pycaw
+- Windows Core Audio
 
-Keyboard controls are provided as a backup to the gesture controls.
+## Project Structure
 
-Technologies Used
-Python
-OpenCV
-MediaPipe
-Pycaw
-Windows Core Audio
-Project Structure
 AI-Hand-Gesture-Controller/
-│
-├── hand_landmarker.task
-├── hand_tracker.py
-├── volume_control.py
+
 ├── main.py
+
+├── hand_tracker.py
+
+├── volume_control.py
+
+├── hand_landmarker.task
+
 ├── .gitignore
+
 └── README.md
-File Description
 
-main.py
+## File Description
 
-Main application that connects hand tracking, volume control, gestures and the user interface.
+### main.py
 
-hand_tracker.py
+The main application that connects hand tracking, gesture recognition, volume control, and the user interface.
 
-Handles MediaPipe hand detection, landmark tracking, gesture detection and thumb-index distance calculation.
+### hand_tracker.py
 
-volume_control.py
+Handles MediaPipe hand detection, hand landmarks, gesture recognition, and thumb-index distance calculation.
 
-Controls the Windows system audio volume using Pycaw.
+### volume_control.py
 
-hand_landmarker.task
+Controls the Windows system volume using Pycaw.
 
-MediaPipe hand landmark model used for real-time hand detection.
+### hand_landmarker.task
 
-Installation
-1. Clone the repository
+MediaPipe's hand landmark model used for real-time hand tracking.
+
+## Installation
+
+### 1. Clone the Repository
+
 git clone https://github.com/sikanderbukht38-cell/AI-Hand-Gesture-Controller.git
-2. Open the project
-cd AI-Hand-Gesture-Controller
-3. Create a virtual environment
-python -m venv .venv
-4. Activate the virtual environment
 
-Windows PowerShell:
+### 2. Open the Project
+
+cd AI-Hand-Gesture-Controller
+
+### 3. Create a Virtual Environment
+
+python -m venv .venv
+
+### 4. Activate the Virtual Environment
 
 .venv\Scripts\Activate.ps1
-5. Install dependencies
+
+### 5. Install Dependencies
+
 pip install opencv-contrib-python mediapipe pycaw comtypes
-6. Run the application
+
+### 6. Run the Application
+
 python main.py
-Requirements
-Windows
-Python 3.10+
-Webcam
-Working microphone/camera permissions
-Speakers or headphones
-Usage
 
-After starting the application:
+## Requirements
 
-Show one hand to the camera.
-Move your thumb and index finger closer or farther apart.
-The system volume changes accordingly.
-Show an open palm with your second hand to lock the volume.
-Show the second-hand palm again to unlock it.
-Press Q to exit.
-Volume Range
+- Windows
+- Python 3.10 or newer
+- Webcam
+- Speakers or headphones
+- Camera permissions enabled
 
-The controller maps thumb-index distance approximately as follows:
+## Volume Mapping
 
-0.03 → 0%
+The thumb-index distance is mapped approximately as:
 
-0.22 → 100%
+0.03 = 0% volume
 
-The range can be adjusted in main.py if needed.
+0.22 = 100% volume
 
-Future Improvements
+These values can be adjusted in `main.py` to change the sensitivity.
 
-Possible future additions include:
+## Usage
 
-Custom gesture profiles
-Music playback controls
-Play / pause gestures
-Next / previous track gestures
-Brightness control
-Application-specific volume control
-Gesture customization
-Improved hand identification
-GUI settings panel
-Machine-learning based gesture classification
-Author
+1. Start the application.
+2. Allow access to your webcam.
+3. Use your first hand to control the volume.
+4. Move your thumb and index finger to adjust the volume.
+5. Show an open palm with your second hand to lock the volume.
+6. Remove the second hand. The volume remains locked.
+7. Show the second-hand palm again to unlock the volume.
+8. Press `Q` to exit.
 
-Sikander Bukht
+## Future Improvements
 
-GitHub:
-https://github.com/sikanderbukht38-cell
+- Play and pause music using gestures
+- Next and previous track controls
+- Brightness control
+- Application-specific volume control
+- Customizable gestures
+- Gesture-based media controls
+- GUI settings panel
+- Improved hand identification
+- Additional gesture recognition
 
-License
+## Author
 
-This project is available for educational and personal use.
+**Sikander Bukht**
 
+GitHub: https://github.com/sikanderbukht38-cell
 
-## STEP 3 — Save it
+## License
 
-Make sure the file is actually named:
-
-```text
-README.md
+This project is intended for educational and personal use.
